@@ -100,7 +100,10 @@ module EventMachine
 
               @cookies.clear
               @cookies = @cookiejar.get(@response_header.location).map(&:to_s) if @req.pass_cookies
+
               @req.set_uri(@response_header.location)
+              @req.set_method(:get)
+              @req.set_body(nil)
 
               @conn.redirect(self)
             else

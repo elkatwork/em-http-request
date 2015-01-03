@@ -10,13 +10,13 @@ class HttpClientOptions
     @redirects = options[:redirects] ||= 0     # default number of redirects to follow
     @followed  = options[:followed]  ||= 0     # keep track of number of followed requests
 
-    @method   = method.to_s.upcase
-    @headers  = options[:head] || {}
-    @query    = options[:query]
+    set_method(method)
+    @headers    = options[:head] || {}
+    @query      = options[:query]
 
 
-    @file     = options[:file]
-    @body     = options[:body]
+    @file = options[:file]
+    set_body(options[:body])
 
     @pass_cookies = options.fetch(:pass_cookies, true)  # pass cookies between redirects
     @decoding     = options.fetch(:decoding, true)      # auto-decode compressed response
@@ -43,6 +43,13 @@ class HttpClientOptions
     if @port.nil?
       @port = @uri.scheme == "https" ? 443 : 80
     end
+  end
 
+  def set_method(method)
+    @method = method.to_s.upcase
+  end
+
+  def set_body(body)
+    @body = body
   end
 end
