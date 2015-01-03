@@ -36,7 +36,7 @@ module EventMachine
 
     # Cookie header from the server
     def cookie
-      self[HttpClient::SET_COOKIE]
+      [ self[HttpClient::SET_COOKIE] || [] ].flatten
     end
 
     # Is the transfer encoding chunked?
